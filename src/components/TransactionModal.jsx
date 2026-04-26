@@ -12,6 +12,17 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     if (transaction) {
       setForm({ title: transaction.title, amount: transaction.amount, type: transaction.type,
         category: transaction.category, description: transaction.description || '',
@@ -73,7 +84,7 @@ const TransactionModal = ({ isOpen, onClose, transaction }) => {
             <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Title *</label>
             <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })}
               className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition-all"
-              placeholder="e.g. Grocery shopping" />
+              placeholder="e.g. Grocery shopping" autoFocus />
           </div>
 
           {/* Amount + Date — stack on xs, side-by-side on sm */}

@@ -1,6 +1,18 @@
+import { useEffect } from 'react';
 import { AlertTriangle } from 'lucide-react';
 
 const ConfirmModal = ({ isOpen, onClose, onConfirm, message }) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
